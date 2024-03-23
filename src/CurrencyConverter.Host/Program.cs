@@ -1,4 +1,6 @@
+using CurrencyConverter.Contracts.Responses;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,15 +18,27 @@ builder.Services.AddSwaggerGen(c =>
         Description = builder.Configuration.GetValue<string>("SwaggerDescription") ?? string.Empty
     });
 
-    //c.ExampleFilters();
+    c.ExampleFilters();
 
-    // Set the comments path for the Swagger JSON and UI.
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
+    var assemblies = new List<Assembly>
+    {
+        Assembly.GetExecutingAssembly(), // Include comments from the current assembly
+        typeof(ErrorResponse).Assembly,
+    };
+
+    foreach (var assembly in assemblies)
+    {
+        // Set the comments path for the Swagger JSON and UI.
+        var xmlFile = $"{assembly.GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        if (File.Exists(xmlPath))
+        {
+            c.IncludeXmlComments(xmlPath);
+        }
+    }
 });
 
-//builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
