@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CurrencyConverter.Application.Validators;
 
-internal class ConvertRequestValidator : AbstractValidator<ConvertRequest>
+internal class CurrencyAmountValidator : AbstractValidator<CurrencyAmount>
 {
-    public ConvertRequestValidator()
+    public CurrencyAmountValidator()
     {
         RuleFor(request => request.Amount)
             .GreaterThan(0m);

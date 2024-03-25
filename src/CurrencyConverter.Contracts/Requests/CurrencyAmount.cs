@@ -3,9 +3,9 @@
 namespace CurrencyConverter.Contracts.Requests;
 
 /// <summary>
-/// Object representing currency conversion request.
+/// Object representing currency amount conversion request
 /// </summary>
-public record ConvertRequest
+public record CurrencyAmount
 {
     /// <summary>
     /// Source currency amount to convert.
@@ -28,7 +28,7 @@ public record ConvertRequest
     public DateTime? FromDate { get; init; } = null;
 
 #pragma warning disable 1591
-    public ConvertRequest() { }
-    public ConvertRequest(decimal amount, string currencyFrom, string currencyTo, DateTime? fromDate = null)
+    public CurrencyAmount() { }
+    public CurrencyAmount(decimal amount, string currencyFrom, string currencyTo, DateTime? fromDate = null)
         => (Amount, CurrencyFrom, CurrencyTo, FromDate) = (amount, currencyFrom, currencyTo, fromDate);
 }

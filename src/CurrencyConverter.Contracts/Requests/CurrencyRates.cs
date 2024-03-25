@@ -3,9 +3,9 @@
 namespace CurrencyConverter.Contracts.Requests;
 
 /// <summary>
-/// Object representing the rates request.
+/// Object representing the currency rates request.
 /// </summary>
-public record RatesRequest
+public record CurrencyRates
 {
     /// <summary>
     /// Currency to use as a base.
@@ -18,7 +18,7 @@ public record RatesRequest
     public DateTime? FromDate { get; init; } = null;
 
 #pragma warning disable 1591
-    public RatesRequest() { }
-    public RatesRequest(string baseCurrency, DateTime? fromDate = null)
+    public CurrencyRates() { }
+    public CurrencyRates(string baseCurrency, DateTime? fromDate = null)
         => (BaseCurrency, FromDate) = (baseCurrency, fromDate);
 }

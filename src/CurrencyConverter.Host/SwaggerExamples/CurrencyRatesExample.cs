@@ -2,11 +2,11 @@
 using Swashbuckle.AspNetCore.Filters;
 
 #pragma warning disable 1591
-public class RatesRequestExample : IExamplesProvider<RatesRequest>
+public class CurrencyRatesExample : IExamplesProvider<CurrencyRates>
 {
-    public RatesRequest GetExamples()
+    public CurrencyRates GetExamples()
     {
-        return new RatesRequest()
+        return new CurrencyRates()
         {
             BaseCurrency = "EUR",
             FromDate = new DateTime(2024, 2, 13)

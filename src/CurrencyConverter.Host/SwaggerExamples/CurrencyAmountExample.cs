@@ -2,11 +2,11 @@
 using Swashbuckle.AspNetCore.Filters;
 
 #pragma warning disable 1591
-public class ConvertRequestExample : IExamplesProvider<ConvertRequest>
+public class CurrencyAmountExample : IExamplesProvider<CurrencyAmount>
 {
-    public ConvertRequest GetExamples()
+    public CurrencyAmount GetExamples()
     {
-        return new ConvertRequest()
+        return new CurrencyAmount()
         {
             Amount = 350.42m,
             CurrencyFrom = "EUR",

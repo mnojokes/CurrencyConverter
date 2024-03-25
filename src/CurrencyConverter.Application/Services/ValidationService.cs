@@ -7,23 +7,23 @@ using System.Text;
 namespace CurrencyConverter.Application.Services;
 public class ValidationService
 {
-    private readonly ConvertRequestValidator _convertRequestValidator;
-    private readonly RatesRequestValidator _ratesRequestValidator;
+    private readonly CurrencyAmountValidator _currencyAmountValidator;
+    private readonly CurrencyRatesValidator _currencyRatesValidator;
 
     public ValidationService()
     {
-        _convertRequestValidator = new ConvertRequestValidator();
-        _ratesRequestValidator = new RatesRequestValidator();
+        _currencyAmountValidator = new CurrencyAmountValidator();
+        _currencyRatesValidator = new CurrencyRatesValidator();
     }
-    public void Validate(ConvertRequest request)
+    public void Validate(CurrencyAmount request)
     {
-        ValidationResult result = _convertRequestValidator.Validate(request);
+        ValidationResult result = _currencyAmountValidator.Validate(request);
         HandleValidationResult(result);
     }
 
-    public void Validate(RatesRequest request)
+    public void Validate(CurrencyRates request)
     {
-        ValidationResult result = _ratesRequestValidator.Validate(request);
+        ValidationResult result = _currencyRatesValidator.Validate(request);
         HandleValidationResult(result);
     }
 

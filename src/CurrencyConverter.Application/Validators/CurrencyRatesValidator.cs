@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CurrencyConverter.Application.Validators;
 
-internal class RatesRequestValidator : AbstractValidator<RatesRequest>
+internal class CurrencyRatesValidator : AbstractValidator<CurrencyRates>
 {
-    internal RatesRequestValidator()
+    internal CurrencyRatesValidator()
     {
         RuleFor(request => request.BaseCurrency)
             .SetValidator(new CurrencyCodeValidator());

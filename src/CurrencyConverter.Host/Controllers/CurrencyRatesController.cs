@@ -1,6 +1,8 @@
-﻿using CurrencyConverter.Application.Services;
+﻿using CurrencyConverter.Application.Queries;
+using CurrencyConverter.Application.Services;
 using CurrencyConverter.Contracts.Requests;
 using CurrencyConverter.Contracts.Responses;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -12,9 +14,11 @@ namespace CurrencyConverter.Host.Controllers;
 public class CurrencyRatesController : Controller
 {
     private readonly ValidationService _validationService;
-    public CurrencyRatesController(ValidationService validationService)
+    private readonly IMediator _mediator;
+    public CurrencyRatesController(ValidationService validationService, IMediator mediator)
     {
         _validationService = validationService;
+        _mediator = mediator;
     }
 
 #pragma warning restore 1591
@@ -26,7 +30,7 @@ public class CurrencyRatesController : Controller
     /// * 'FromDate' is empty: will use the most current available rate for conversion;<br />
     /// * 'FromDate' not empty: will try to do the conversion using the rate from that date.
     /// </remarks>
-    /// <param name="convert">Conversion request.</param>
+    /// <param name="request">Conversion request.</param>
     /// <returns>Conversion result.</returns>
     /// <response code="200">Successfully converted.</response>
     /// <response code="400">Bad request, problem with entered data.</response>
@@ -39,11 +43,12 @@ public class CurrencyRatesController : Controller
     [SwaggerResponseExample(400, typeof(ErrorResponseExample))]
     [ProducesResponseType(typeof(ErrorResponse), 500)]
     [SwaggerResponseExample(500, typeof(ErrorResponseExample))]
-    public async Task<IActionResult> Convert([FromQuery] ConvertRequest convert)
+    public async Task<IActionResult> Convert([FromQuery] CurrencyAmount request)
     {
-        _validationService.Validate(convert);
+        _validationService.Validate(request);
 
-        throw new NotImplementedException();
+        ConvertResponse response = await _mediator.Send(new ConvertRequest(request));
+        return Ok(response);
     }
 
     /// <summary>
@@ -54,7 +59,7 @@ public class CurrencyRatesController : Controller
     /// * 'FromDate' is empty: returns the most current rates;<br />
     /// * 'FromDate' not empty: tries to get rates for that date.
     /// </remarks>
-    /// <param name="rates">Rates request.</param>
+    /// <param name="request">Rates request.</param>
     /// <returns>Dictionary containing conversion rates relative to base currency.</returns>
     /// <response code="200">Successfully retrieved.</response>
     /// <response code="400">Bad request, problem with entered data.</response>
@@ -67,10 +72,11 @@ public class CurrencyRatesController : Controller
     [SwaggerResponseExample(400, typeof(ErrorResponseExample))]
     [ProducesResponseType(typeof(ErrorResponse), 500)]
     [SwaggerResponseExample(500, typeof(ErrorResponseExample))]
-    public async Task<IActionResult> Get([FromQuery] RatesRequest rates)
+    public async Task<IActionResult> Get([FromQuery] CurrencyRates request)
     {
-        _validationService.Validate(rates);
+        _validationService.Validate(request);
 
-        throw new NotImplementedException();
+        RatesResponse response = await _mediator.Send(new RatesRequest(request));
+        return Ok(response);
     }
 }
