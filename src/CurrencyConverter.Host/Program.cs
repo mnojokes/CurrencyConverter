@@ -1,4 +1,5 @@
 using CurrencyConverter.Contracts.Responses;
+using CurrencyConverter.Host.Middlewares;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -57,5 +58,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseExceptionHandlingMiddleware();
 
 app.Run();

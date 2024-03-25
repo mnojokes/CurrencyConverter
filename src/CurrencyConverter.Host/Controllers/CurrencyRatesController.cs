@@ -11,10 +11,10 @@ namespace CurrencyConverter.Host.Controllers;
 [ApiController]
 public class CurrencyRatesController : Controller
 {
-    private readonly CurrencyRateService _currencyRateService;
-    public CurrencyRatesController(CurrencyRateService currencyRateService)
+    private readonly ValidationService _validationService;
+    public CurrencyRatesController(ValidationService validationService)
     {
-        _currencyRateService = currencyRateService;
+        _validationService = validationService;
     }
 
 #pragma warning restore 1591
@@ -41,6 +41,8 @@ public class CurrencyRatesController : Controller
     [SwaggerResponseExample(500, typeof(ErrorResponseExample))]
     public async Task<IActionResult> Convert([FromQuery] ConvertRequest convert)
     {
+        _validationService.Validate(convert);
+
         throw new NotImplementedException();
     }
 
@@ -67,6 +69,8 @@ public class CurrencyRatesController : Controller
     [SwaggerResponseExample(500, typeof(ErrorResponseExample))]
     public async Task<IActionResult> Get([FromQuery] RatesRequest rates)
     {
+        _validationService.Validate(rates);
+
         throw new NotImplementedException();
     }
 }
