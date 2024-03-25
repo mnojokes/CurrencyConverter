@@ -2,6 +2,8 @@
 using CurrencyConverter.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace CurrencyConverter.Application;
+
 public static class DependencyInjection
 {
     public static void AddApplication(this IServiceCollection services)

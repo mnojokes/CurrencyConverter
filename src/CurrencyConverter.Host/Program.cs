@@ -1,5 +1,7 @@
+using CurrencyConverter.Application;
 using CurrencyConverter.Contracts.Responses;
 using CurrencyConverter.Host.Middlewares;
+using CurrencyConverter.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
