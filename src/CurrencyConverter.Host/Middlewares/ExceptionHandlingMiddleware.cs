@@ -30,6 +30,7 @@ namespace CurrencyConverter.Host.Middlewares
 
                 response.StatusCode = exception switch
                 {
+                    CurrencyRatesNotFoundException => (int)HttpStatusCode.NotFound,
                     DataValidationException => (int)HttpStatusCode.BadRequest,
                     InvalidOperationException => (int)HttpStatusCode.BadRequest,
                     _ => (int)HttpStatusCode.InternalServerError

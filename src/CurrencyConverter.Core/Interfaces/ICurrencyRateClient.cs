@@ -1,6 +1,8 @@
-﻿namespace CurrencyConverter.Core.Interfaces;
+﻿using CurrencyConverter.Core.Objects;
+
+namespace CurrencyConverter.Core.Interfaces;
 
 public interface ICurrencyRateClient
 {
-    Task<Dictionary<string, decimal>> GetRates(DateTime? date);
+    Task<CurrencyRateClientResponse?> GetRates(DateTime? date);
 }

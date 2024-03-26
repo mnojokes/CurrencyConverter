@@ -1,22 +1,23 @@
-﻿using CurrencyConverter.Application.Queries;
+﻿using CurrencyConverter.Application.Interfaces;
+using CurrencyConverter.Application.Queries;
 using CurrencyConverter.Contracts.Responses;
-using CurrencyConverter.Core.Interfaces;
+using CurrencyConverter.Core.Objects;
 using MediatR;
 
 namespace CurrencyConverter.Application.Handlers;
 
 public class RatesRequestHandler : IRequestHandler<RatesRequest, RatesResponse>
 {
-    private readonly ICurrencyRateClient _currencyRateClient;
+    private readonly ICurrencyRateDownloadService _currencyRateDownloadService;
 
-    public RatesRequestHandler(ICurrencyRateClient currencyRateClient)
+    public RatesRequestHandler(ICurrencyRateDownloadService currencyRateDownloadService)
     {
-        _currencyRateClient = currencyRateClient;
+        _currencyRateDownloadService = currencyRateDownloadService;
     }
 
-    public Task<RatesResponse> Handle(RatesRequest request, CancellationToken cancellationToken)
+    public async Task<RatesResponse> Handle(RatesRequest request, CancellationToken cancellationToken)
     {
-        var rates = _currencyRateClient.GetRates(request.Data.FromDate);
+        CurrencyRatesDto rates = await _currencyRateDownloadService.GetRates(request.Data.FromDate);
 
         throw new NotImplementedException();
     }
