@@ -2,6 +2,7 @@
 using CurrencyConverter.Core.Objects;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace CurrencyConverter.Infrastructure.Clients;
 
@@ -39,7 +40,7 @@ public class OpenExchangeRatesClient : ICurrencyRateClient
                 case true:
                     rateData = JsonConvert.DeserializeObject<CurrencyRateClientResponse>(await response.Content.ReadAsStringAsync());
                     break;
-                case false when response.StatusCode == System.Net.HttpStatusCode.NotFound:
+                case false when response.StatusCode == HttpStatusCode.BadRequest:
                     break;
                 case false:
                     response.EnsureSuccessStatusCode();
